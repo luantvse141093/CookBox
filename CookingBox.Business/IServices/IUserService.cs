@@ -20,6 +20,7 @@ namespace CookingBox.Business.IServices
         Task<int> InsertUser(UserViewModel UserViewModel);
         Task<bool> UpdateUser(UserViewModel UserViewModel);
         Task<bool> DeleteUser(int id);
+        Task<UserViewModel> Login(string email, string password);
 
 
 

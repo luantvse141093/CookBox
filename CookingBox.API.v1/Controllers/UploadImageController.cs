@@ -7,15 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Storage;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace CookingBox.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("CBPlicoy")]
+    [Route("api/v1/image")]
     [ApiController]
     public class UploadImageController : ControllerBase
     {
@@ -23,11 +22,19 @@ namespace CookingBox.API.v1.Controllers
         private static string Bucket = "cookingbox-project.appspot.com";
         private static string AuthEmail = "nguyenvanluan1789@gmail.com";
         private static string AuthPassword = "1421Luan";
+        private readonly IDistributedCache _distributedCache;
 
 
+        public UploadImageController(IDistributedCache distributedCache)
+        {
+            _distributedCache = distributedCache;
+        }
         [HttpPost]
         public async Task<IActionResult> Index(IFormFile file)
         {
+
+            string cachedImageUrlString = string.Empty;
+            cachedImageUrlString = await _distributedCache.GetStringAsync("_imageUrl");
 
             if (file.Length > 0)
             {
@@ -36,7 +43,7 @@ namespace CookingBox.API.v1.Controllers
                 var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
 
-                // you can use CancellationTokenSource to cancel the upload midway
+
                 var cancellation = new CancellationTokenSource();
 
                 var task = new FirebaseStorage(
@@ -44,15 +51,22 @@ namespace CookingBox.API.v1.Controllers
                     new FirebaseStorageOptions
                     {
                         AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                        ThrowOnCancel = true // when you cancel the upload, exception is thrown. By default no exception is thrown
+                        ThrowOnCancel = true
                     })
                     .Child("assets")
                     .Child("image")
                       .Child($"{file.FileName}")
-                      //.Child($"{file.FileName}.{Path.GetExtension(file.FileName).Substring(1)}")
+
                       .PutAsync(ms, cancellation.Token);
 
                 task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+
+                var expiryOptions = new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5),
+                    SlidingExpiration = TimeSpan.FromMinutes(5)
+                };
+                await _distributedCache.SetStringAsync("_imageUrl", (await task).ToString(), expiryOptions);
 
                 return Ok((await task).ToString());
 

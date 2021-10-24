@@ -59,8 +59,8 @@ namespace CookingBox.API.v1.Controllers.User
             return Ok(dish);
         }
 
-        [HttpGet("dishTaste")]
-        public async Task<IActionResult> GetDishUserByTaste([FromQuery] UserMenuListSearch userMenuListSearch)
+        [HttpGet("dishtaste")]
+        public async Task<IActionResult> GetDishUserByTaste([FromBody] UserMenuListSearch userMenuListSearch)
         {
             var dish = await _DishsService.GetDishByTaste(userMenuListSearch);
             if (dish == null)

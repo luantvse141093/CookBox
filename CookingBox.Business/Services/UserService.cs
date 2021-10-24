@@ -109,6 +109,17 @@ namespace CookingBox.Business.Services
             return await _usersRepository.UpdateUser(user);
         }
 
-
+        public async Task<UserViewModel> Login(string email, string password)
+        {
+            var user = await _usersRepository.GetUsers();
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword("truong123");
+            user = user.Where(x => x.Email.ToLower().Equals(email.ToLower()) && BCrypt.Net.BCrypt.Verify(password, "123"));
+            if (user.Count() > 0)
+            {
+                var userViewModel = _mapper.Map<UserViewModel>(user.FirstOrDefault());
+                return userViewModel;
+            }
+            return null;
+        }
     }
 }

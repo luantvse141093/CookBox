@@ -48,6 +48,7 @@ namespace CookingBox.API.v1.Controllers
             {
                 FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(login.token);
 
+
                 var email = decodedToken.Claims.GetValueOrDefault("email").ToString();
 
                 myList.Add(new KeyValuePair<string, string>("name", decodedToken.Claims.GetValueOrDefault("name").ToString()));
@@ -65,16 +66,19 @@ namespace CookingBox.API.v1.Controllers
                     {
                         email = email,
                         name = decodedToken.Claims.GetValueOrDefault("name").ToString(),
-                        role_id = "US",
-                        phone = "14256"
+                        role_id = "US"
                     });
                 }
             }
-            else if (login.user != null && login.pass != null && login.token == null)
+            else if (login.email != null && login.pass != null && login.token == null)
             {
-                myList.Add(new KeyValuePair<string, string>("name", "LuanTV"));
-                myList.Add(new KeyValuePair<string, string>("email", "luan@gmail.com"));
-                myList.Add(new KeyValuePair<string, string>("role", "AD"));
+                if (_usersService.Login(login.email, login.pass) != null)
+                {
+                    myList.Add(new KeyValuePair<string, string>("name", _usersService.Login(login.email, login.pass).Result.name));
+                    myList.Add(new KeyValuePair<string, string>("email", _usersService.Login(login.email, login.pass).Result.email));
+                    myList.Add(new KeyValuePair<string, string>("role", _usersService.Login(login.email, login.pass).Result.role_name));
+                }
+
             }
             return myList;
         }

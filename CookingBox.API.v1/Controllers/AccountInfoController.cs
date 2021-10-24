@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CookingBox.API.v1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/accountinfo")]
     [ApiController]
-    public class AccoutInfoController : ControllerBase
+    public class AccountInfoController : ControllerBase
     {
 
         [HttpGet]
