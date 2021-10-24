@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using CookingBox.Business.CustomEntities.ModelNotification;
 
 namespace CookingBox.API.v1
 
@@ -77,11 +78,21 @@ namespace CookingBox.API.v1
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:SecretKey"]))
                 };
             });
+
+
             //cache redis
-            services.AddStackExchangeRedisCache(options => {
+            services.AddStackExchangeRedisCache(options =>
+            {
                 options.Configuration = "localhost:6379";
                 options.InstanceName = "CookingBox.API";
             });
+
+
+            //notification
+            var appSettingsSection = Configuration.GetSection("FcmNotification");
+            services.Configure<FcmNotificationSetting>(appSettingsSection);
+
+
             //author
             services.AddAuthorization(options =>
             {
