@@ -5,17 +5,15 @@ using System.Collections.Generic;
 
 namespace CookingBox.Data.Entities
 {
-    public partial class TasteDetail
+    public partial class MenuStore
     {
         public int Id { get; set; }
-        public int? TasteLevel { get; set; }
-        public int? TasteId { get; set; }
-        public int? DishId { get; set; }
+        public int? MenuId { get; set; }
+        public int? StoreId { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
-        public virtual Dish Dish { get; set; }
-
+        public virtual Menu Menu { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
-        public virtual Taste Taste { get; set; }
+        public virtual Store Store { get; set; }
     }
 }

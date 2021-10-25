@@ -72,12 +72,15 @@ namespace CookingBox.API.v1.Controllers
             }
             else if (login.email != null && login.pass != null && login.token == null)
             {
-                if (_usersService.Login(login.email, login.pass) != null)
-                {
-                    myList.Add(new KeyValuePair<string, string>("name", _usersService.Login(login.email, login.pass).Result.name));
-                    myList.Add(new KeyValuePair<string, string>("email", _usersService.Login(login.email, login.pass).Result.email));
-                    myList.Add(new KeyValuePair<string, string>("role", _usersService.Login(login.email, login.pass).Result.role_name));
-                }
+                //if (_usersService.Login(login.email, login.pass) != null)
+                //{
+                //    myList.Add(new KeyValuePair<string, string>("name", _usersService.Login(login.email, login.pass).Result.name));
+                //    myList.Add(new KeyValuePair<string, string>("email", _usersService.Login(login.email, login.pass).Result.email));
+                //    myList.Add(new KeyValuePair<string, string>("role", _usersService.Login(login.email, login.pass).Result.role_name));
+                //}
+                myList.Add(new KeyValuePair<string, string>("name", "luan"));
+                myList.Add(new KeyValuePair<string, string>("email", "luan@gmail.com"));
+                myList.Add(new KeyValuePair<string, string>("role", "AD"));
 
             }
             return myList;

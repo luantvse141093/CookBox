@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -20,12 +19,15 @@ namespace CookingBox.Data.Entities
         public int? UserId { get; set; }
         public int? StoreId { get; set; }
         public string OrderStatus { get; set; }
+        public string Note { get; set; }
 
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Payment Payment { get; set; }
-        [JsonIgnore]
+
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Store Store { get; set; }
-        [JsonIgnore]
+
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual User User { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

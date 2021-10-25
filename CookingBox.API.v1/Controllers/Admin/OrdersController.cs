@@ -59,10 +59,10 @@ namespace CookingBox.Api.Controllers.Admin
         }
 
         [HttpPut("cancel")]
-        public async Task<IActionResult> CancelOrder(int id)
+        public async Task<IActionResult> CancelOrder(int id, string note)
         {
 
-            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString());
+            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note);
 
             if (result)
             {
@@ -76,7 +76,7 @@ namespace CookingBox.Api.Controllers.Admin
         public async Task<IActionResult> AcceptOrder(int id)
         {
 
-            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Processing.ToString());
+            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Processing.ToString(), "");
 
             if (result)
             {

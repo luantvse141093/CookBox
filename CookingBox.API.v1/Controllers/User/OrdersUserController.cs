@@ -80,10 +80,10 @@ namespace CookingBox.API.v1.Controllers.User
         }
 
         [HttpPut("cancel")]
-        public async Task<IActionResult> CancelOrder(int id)
+        public async Task<IActionResult> CancelOrder(int id, string note)
         {
 
-            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString());
+            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note);
 
             if (result)
             {

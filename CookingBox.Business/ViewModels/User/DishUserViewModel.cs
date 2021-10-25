@@ -12,6 +12,7 @@ namespace CookingBox.Business.ViewModels.User
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public int meal { get; set; }
         public string image { get; set; }
         public int category_id { get; set; }
         public string category_name { get; set; }

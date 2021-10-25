@@ -19,6 +19,7 @@ namespace CookingBox.Business.ViewModels
         public string? user_name { get; set; }
         public string? store_name { get; set; }
         public double? total { get; set; }
+        public string? note { get; set; }
 
         public OrderStatus order_status { get; set; }
 

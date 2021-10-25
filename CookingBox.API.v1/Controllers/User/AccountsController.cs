@@ -49,6 +49,10 @@ namespace CookingBox.Api.Controllers.User
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UserViewModel userViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var user = await _usersService.GetUser(userViewModel.id);
             user.name = userViewModel.name;
             user.address = userViewModel.address;

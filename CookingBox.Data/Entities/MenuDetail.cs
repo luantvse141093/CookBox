@@ -13,6 +13,7 @@ namespace CookingBox.Data.Entities
         public double? Price { get; set; }
 
         public virtual Dish Dish { get; set; }
+
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Menu Menu { get; set; }
     }

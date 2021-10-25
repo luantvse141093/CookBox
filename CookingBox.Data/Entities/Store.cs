@@ -9,7 +9,7 @@ namespace CookingBox.Data.Entities
     {
         public Store()
         {
-            Menus = new HashSet<Menu>();
+            MenuStores = new HashSet<MenuStore>();
             Orders = new HashSet<Order>();
         }
 
@@ -18,7 +18,7 @@ namespace CookingBox.Data.Entities
         public string Address { get; set; }
         public bool? Status { get; set; }
 
-        public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<MenuStore> MenuStores { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace CookingBox.Data.Entities
         public virtual DbSet<DishIngredient> DishIngredients { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<MenuDetail> MenuDetails { get; set; }
+        public virtual DbSet<MenuStore> MenuStores { get; set; }
         public virtual DbSet<Metarial> Metarials { get; set; }
         public virtual DbSet<Nutrient> Nutrients { get; set; }
         public virtual DbSet<NutrientDetail> NutrientDetails { get; set; }
@@ -41,7 +42,6 @@ namespace CookingBox.Data.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Name=CookBoxDB");
             }
         }
@@ -108,17 +108,10 @@ namespace CookingBox.Data.Entities
 
                 entity.Property(e => e.Status).HasDefaultValueSql("('True')");
 
-                entity.Property(e => e.StoreId).HasColumnName("StoreID");
-
                 entity.HasOne(d => d.Session)
                     .WithMany(p => p.Menus)
                     .HasForeignKey(d => d.SessionId)
                     .HasConstraintName("FK_MSR");
-
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.Menus)
-                    .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK_MS");
             });
 
             modelBuilder.Entity<MenuDetail>(entity =>
@@ -138,6 +131,25 @@ namespace CookingBox.Data.Entities
                     .WithMany(p => p.MenuDetails)
                     .HasForeignKey(d => d.MenuId)
                     .HasConstraintName("FK_MM");
+            });
+
+            modelBuilder.Entity<MenuStore>(entity =>
+            {
+                entity.ToTable("MenuStore");
+
+                entity.Property(e => e.MenuId).HasColumnName("MenuID");
+
+                entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.HasOne(d => d.Menu)
+                    .WithMany(p => p.MenuStores)
+                    .HasForeignKey(d => d.MenuId)
+                    .HasConstraintName("FK_MenuStore_Menu");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.MenuStores)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK_MenuStore_Store");
             });
 
             modelBuilder.Entity<Metarial>(entity =>
@@ -179,9 +191,13 @@ namespace CookingBox.Data.Entities
             {
                 entity.ToTable("Order");
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Note).HasMaxLength(150);
 
                 entity.Property(e => e.OrderStatus)
                     .HasMaxLength(30)
@@ -342,6 +358,10 @@ namespace CookingBox.Data.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(50)

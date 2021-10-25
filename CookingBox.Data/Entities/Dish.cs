@@ -19,6 +19,7 @@ namespace CookingBox.Data.Entities
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public int? Meal { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public int? CategoryId { get; set; }
@@ -27,7 +28,6 @@ namespace CookingBox.Data.Entities
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Category Category { get; set; }
-
         public virtual ICollection<DishIngredient> DishIngredients { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]

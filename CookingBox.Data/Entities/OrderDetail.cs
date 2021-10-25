@@ -15,6 +15,7 @@ namespace CookingBox.Data.Entities
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Dish Dish { get; set; }
+
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Order Order { get; set; }
     }
