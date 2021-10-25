@@ -87,6 +87,8 @@ namespace CookingBox.Business.Mappings
             //MenuDetail
             CreateMap<MenuDetail, MenuDetailViewModel>()
                 .ReverseMap();
+            CreateMap<MenuStore, MenuStoreViewModel>()
+                .ReverseMap();
 
             //OrderDetail
             CreateMap<OrderDetail, OrderDetailViewModel>()

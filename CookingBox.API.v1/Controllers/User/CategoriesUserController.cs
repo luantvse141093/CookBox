@@ -3,6 +3,7 @@ using CookingBox.Business.CustomEntities.ModelSearch;
 using CookingBox.Business.Helppers;
 using CookingBox.Business.IServices;
 using CookingBox.Business.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookingBox.API.v1.Controllers.User
 {
+    [Authorize(Policy = "US")]
     [Route("api/v1/user/categories")]
     [EnableCors("CBPolicy")]
     [ApiController]

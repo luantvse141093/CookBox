@@ -17,6 +17,8 @@ namespace CookingBox.Business.ViewModels
         public bool? status { get; set; }
 
         public virtual ICollection<MenuDetailViewModel> menu_details { get; set; }
+        public virtual ICollection<MenuStoreViewModel> menu_stores { get; set; }
+
 
 
     }

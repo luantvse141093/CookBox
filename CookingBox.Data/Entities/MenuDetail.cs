@@ -11,6 +11,7 @@ namespace CookingBox.Data.Entities
         public int? DishId { get; set; }
         public int? MenuId { get; set; }
         public double? Price { get; set; }
+        public bool? Status { get; set; }
 
         public virtual Dish Dish { get; set; }
 

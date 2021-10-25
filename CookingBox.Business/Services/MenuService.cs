@@ -42,12 +42,18 @@ namespace CookingBox.Business.Services
             var menu = await _menuRepository.GetMenu(id);
             var menuViewModel = _mapper.Map<MenuViewModel>(menu);
             menuViewModel.menu_details = _mapper.Map<ICollection<MenuDetailViewModel>>(menu.MenuDetails);
+            menuViewModel.menu_stores = _mapper.Map<ICollection<MenuStoreViewModel>>(menu.MenuStores);
+
             return menuViewModel;
         }
 
         public async Task<PagedList<MenuViewModel>> GetMenus(MenuListSearch menuListSearch)
         {
             var menus = await _menuRepository.GetMenus();
+            if(menuListSearch.store_id > 0)
+            {
+                menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == menuListSearch.store_id));
+            }
 
             var count = menus.Count();
             var dataPage = menus

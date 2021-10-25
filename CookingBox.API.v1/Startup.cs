@@ -196,6 +196,9 @@ namespace CookingBox.API.v1
             services.AddTransient<ISessionRepository, SessionRepository>();
             services.AddTransient<ISessionService, SessionService>();
 
+            services.AddTransient<IMenuStoreRepository, MenuStoreRepository>();
+            services.AddTransient<IMenuStoreService, MenuStoreService>();
+
             services.AddTransient<INotificationService, NotificationService>();
 
             //get uri page

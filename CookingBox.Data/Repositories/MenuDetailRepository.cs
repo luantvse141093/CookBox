@@ -18,8 +18,10 @@ namespace CookingBox.Data.Repositories
 
         public async Task<bool> DeleteMenuDetail(int id)
         {
-            var currentMenuDetail = await GetMenuDetail(id);
-            _context.MenuDetails.Remove(currentMenuDetail);
+            var menuDetail = await _context.MenuDetails
+                .FirstOrDefaultAsync(x => x.Id == id);
+            menuDetail.Status = false;
+            _context.MenuDetails.Update(menuDetail);
             int rows = await _context.SaveChangesAsync();
             return rows > 0;
         }

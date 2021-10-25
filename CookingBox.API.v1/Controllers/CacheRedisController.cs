@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CookingBox.API.v1.Controllers.User
+namespace CookingBox.API.v1.Controllers
 {
-    //[Authorize(Policy = "US")]
+    
     [Route("api/v1/redis")]
     [ApiController]
     public class CacheRedisController : ControllerBase

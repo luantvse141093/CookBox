@@ -9,6 +9,7 @@ using CookingBox.Business.IServices;
 using CookingBox.Business.ViewModels;
 using CookingBox.Business.ViewModels.User;
 using CookingBox.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookingBox.API.v1.Controllers.User
 {
+    [Authorize(Policy = "US")]
     [Route("api/v1/user/dishes")]
     [EnableCors("CBPolicy")]
     [ApiController]

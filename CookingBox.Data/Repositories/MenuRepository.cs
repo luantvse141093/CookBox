@@ -30,7 +30,7 @@ namespace CookingBox.Data.Repositories
         {
             var menu = await _context.Menus
                   .Include(x => x.Session)
-                  .Include(x => x.MenuStores)
+                  .Include(x => x.MenuStores).ThenInclude(y=>y.Store)
                   .Include(x => x.MenuDetails).ThenInclude(y => y.Dish)
                   .FirstOrDefaultAsync(x => x.Id == id);
             return menu;
@@ -40,8 +40,8 @@ namespace CookingBox.Data.Repositories
         {
             var menus = await _context.Menus
                   .Include(x => x.Session)
-                  .Include(x => x.MenuStores)
-                  .Include(x => x.MenuDetails).ThenInclude(y => y.Dish)
+                  .Include(x => x.MenuStores).ThenInclude(y => y.Store)
+                 .Include(x => x.MenuDetails).ThenInclude(y => y.Dish)
                   .ToListAsync();
             return menus;
         }
