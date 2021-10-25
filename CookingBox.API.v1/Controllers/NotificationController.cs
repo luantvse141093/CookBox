@@ -12,7 +12,7 @@ namespace CookingBox.API.v1.Controllers
 {
     [Route("api/v1/notification")]
     [ApiController]
-    public class NotificationController : Controller
+    public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
         public NotificationController(INotificationService notificationService)
@@ -20,7 +20,7 @@ namespace CookingBox.API.v1.Controllers
             _notificationService = notificationService;
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> SendNotification(NotificationModel notificationModel)
         {
@@ -28,11 +28,5 @@ namespace CookingBox.API.v1.Controllers
             return Ok(result);
         }
 
-        [HttpGet("aa")]
-        public async Task<IActionResult> SendNotification111(string aa)
-        {
-            
-            return Ok(BCrypt.Net.BCrypt.Verify("123456", "$2a$11$.pVgUdyUjDJt8VbVxl3jCeV471/NKREHqU6RuApRFbOCd3gPi/tKK"));
-        }
     }
 }

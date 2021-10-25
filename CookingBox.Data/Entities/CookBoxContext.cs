@@ -122,6 +122,8 @@ namespace CookingBox.Data.Entities
 
                 entity.Property(e => e.MenuId).HasColumnName("MenuID");
 
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.Dish)
                     .WithMany(p => p.MenuDetails)
                     .HasForeignKey(d => d.DishId)
@@ -138,6 +140,8 @@ namespace CookingBox.Data.Entities
                 entity.ToTable("MenuStore");
 
                 entity.Property(e => e.MenuId).HasColumnName("MenuID");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 

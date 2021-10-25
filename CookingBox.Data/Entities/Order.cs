@@ -23,10 +23,8 @@ namespace CookingBox.Data.Entities
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Payment Payment { get; set; }
-
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Store Store { get; set; }
-
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual User User { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

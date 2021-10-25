@@ -16,8 +16,8 @@ namespace CookingBox.API.v1.Controllers.Admin
     [Route("api/v1/admin/menustores")]
     [Authorize(Policy = "AD")]
     [EnableCors("CBPolicy")]
-    
-    public class MenuStoresController : Controller
+    [ApiController]
+    public class MenuStoresController : ControllerBase
     {
         private readonly IMenuStoreService _menuStoreService;
         private readonly IUriService _uriService;
@@ -31,7 +31,7 @@ namespace CookingBox.API.v1.Controllers.Admin
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> InsertMenuStore([FromBody]MenuStoreViewModel menuStoreViewModel)
+        public async Task<IActionResult> InsertMenuStore([FromBody] MenuStoreViewModel menuStoreViewModel)
         {
             var result = await _menuStoreService.InsertMenuStore(menuStoreViewModel);
             if (result > 0)
@@ -42,9 +42,9 @@ namespace CookingBox.API.v1.Controllers.Admin
             return BadRequest();
         }
 
-        
 
-        
+
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMenuStore(int id)
         {

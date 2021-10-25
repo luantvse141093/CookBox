@@ -26,9 +26,11 @@ namespace CookingBox.Data.Entities
         public bool? Status { get; set; }
         public int? ParentId { get; set; }
 
+
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Category Category { get; set; }
         public virtual ICollection<DishIngredient> DishIngredients { get; set; }
+
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<MenuDetail> MenuDetails { get; set; }
