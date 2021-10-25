@@ -1,4 +1,5 @@
 ﻿using CookingBox.Business.CustomEntities.SeedWork;
+using CookingBox.Business.ViewModels;
 using CookingBox.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace CookingBox.Business.CustomEntities.ModelSearch.User
         public int? category_id { get; set; }
         public int dish_id { get; set; } = 0;
 
-        public List<TasteDetail> list_taste { get; set; }
+        public List<TasteDetailViewModel> list_taste { get; set; }
     }
 
 }

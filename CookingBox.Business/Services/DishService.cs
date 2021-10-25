@@ -223,8 +223,8 @@ namespace CookingBox.Business.Services
                         //var test = null;
                         for (int j = 0; j < userMenuListSearch.list_taste.Count(); j++)
                         {
-                            var test = dish1.TasteDetails.Where(x => x.TasteId == userMenuListSearch.list_taste[j].TasteId
-                        && x.TasteLevel == userMenuListSearch.list_taste[j].TasteLevel);
+                            var test = dish1.TasteDetails.Where(x => x.TasteId == userMenuListSearch.list_taste[j].taste_id
+                        && x.TasteLevel == userMenuListSearch.list_taste[j].taste_level);
                             if (test != null && test.Count() != 0)
                             {
                                 checkTasteCount++;
