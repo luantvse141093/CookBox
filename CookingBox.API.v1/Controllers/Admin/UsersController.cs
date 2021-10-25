@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace CookingBox.Api.Controllers.Admin
 {
-    [Authorize(Policy = "AD")]
+    //[Authorize(Policy = "AD")]
     [Route("api/v1/admin/users")]
     [EnableCors("CBPolicy")]
     [ApiController]

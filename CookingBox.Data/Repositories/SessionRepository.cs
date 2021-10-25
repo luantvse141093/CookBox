@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Threading.Tasks;
 using CookingBox.Data.Entities;
 using CookingBox.Data.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookingBox.Data.Repositories
 {

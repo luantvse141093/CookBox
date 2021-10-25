@@ -33,12 +33,12 @@ namespace CookingBox.API.v1.Controllers
         public IActionResult Authentication(UserLogin login)
         {
 
-            if (IsValidUser(login).Result.Count > 0)
+            if (IsValidUser(login).Result != null && IsValidUser(login).Result.Count > 0)
             {
                 var token = GenerateToken();
                 return Ok(new { token });
             }
-            return NotFound();
+            return NotFound("Account not exits");
         }
         List<KeyValuePair<string, string>> myList;
         private async Task<List<KeyValuePair<string, string>>> IsValidUser(UserLogin login)
@@ -72,15 +72,16 @@ namespace CookingBox.API.v1.Controllers
             }
             else if (login.email != null && login.pass != null && login.token == null)
             {
-                //if (_usersService.Login(login.email, login.pass) != null)
-                //{
-                //    myList.Add(new KeyValuePair<string, string>("name", _usersService.Login(login.email, login.pass).Result.name));
-                //    myList.Add(new KeyValuePair<string, string>("email", _usersService.Login(login.email, login.pass).Result.email));
-                //    myList.Add(new KeyValuePair<string, string>("role", _usersService.Login(login.email, login.pass).Result.role_name));
-                //}
-                myList.Add(new KeyValuePair<string, string>("name", "luan"));
-                myList.Add(new KeyValuePair<string, string>("email", "luan@gmail.com"));
-                myList.Add(new KeyValuePair<string, string>("role", "AD"));
+                var loginCheck = _usersService.Login(login.email, login.pass).Result;
+                if (loginCheck != null)
+                {
+                    myList.Add(new KeyValuePair<string, string>("name", loginCheck.name));
+                    myList.Add(new KeyValuePair<string, string>("email", loginCheck.email));
+                    myList.Add(new KeyValuePair<string, string>("role", loginCheck.role_id));
+                }
+                //myList.Add(new KeyValuePair<string, string>("name", "luan"));
+                //myList.Add(new KeyValuePair<string, string>("email", "luan@gmail.com"));
+                //myList.Add(new KeyValuePair<string, string>("role", "AD"));
 
             }
             return myList;

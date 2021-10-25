@@ -126,7 +126,7 @@ namespace CookingBox.Business.Services
         public async Task<DishUserViewModel> GetDishUser(UserMenuListSearch userMenuListSearch)
         {
             var menus = await _menuRepository.GetMenus();
-            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id));
+            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
             if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
             {
@@ -163,7 +163,7 @@ namespace CookingBox.Business.Services
         public async Task<PagedList<MenuDetail>> GetDishesUser(UserMenuListSearch userMenuListSearch)
         {
             var menus = await _menuRepository.GetMenus();
-            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id));
+            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
             if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
             {
@@ -198,7 +198,7 @@ namespace CookingBox.Business.Services
         public async Task<DishUserViewModel> GetDishByTaste(UserMenuListSearch userMenuListSearch)
         {
             var menus = await _menuRepository.GetMenus();
-            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id));
+            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
             if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
             {

@@ -193,6 +193,11 @@ namespace CookingBox.API.v1
             services.AddTransient<IMenuRepository, MenuRepository>();
             services.AddTransient<IMenuService, MenuService>();
 
+            services.AddTransient<ISessionRepository, SessionRepository>();
+            services.AddTransient<ISessionService, SessionService>();
+
+            services.AddTransient<INotificationService, NotificationService>();
+
             //get uri page
             services.AddHttpContextAccessor();
             services.AddSingleton<IUriService>(o =>

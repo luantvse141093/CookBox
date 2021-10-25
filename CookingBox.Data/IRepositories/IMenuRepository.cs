@@ -11,7 +11,7 @@ namespace CookingBox.Data.IRepositories
     {
         Task<IEnumerable<Menu>> GetMenus();
         Task<Menu> GetMenu(int id);
-        Task InsertMenu(Menu Menu);
+        Task<int> InsertMenu(Menu Menu);
         Task<bool> UpdateMenu(Menu Menu);
         Task<bool> DeleteMenu(int id);
     }

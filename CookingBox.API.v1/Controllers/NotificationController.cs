@@ -27,5 +27,12 @@ namespace CookingBox.API.v1.Controllers
             var result = await _notificationService.SendNotification(notificationModel);
             return Ok(result);
         }
+
+        [HttpGet("aa")]
+        public async Task<IActionResult> SendNotification111(string aa)
+        {
+            
+            return Ok(BCrypt.Net.BCrypt.Verify("123456", "$2a$11$.pVgUdyUjDJt8VbVxl3jCeV471/NKREHqU6RuApRFbOCd3gPi/tKK"));
+        }
     }
 }

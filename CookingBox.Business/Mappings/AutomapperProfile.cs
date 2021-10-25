@@ -56,13 +56,33 @@ namespace CookingBox.Business.Mappings
             CreateMap<Payment, PaymentViewModel>()
                 .ReverseMap();
 
+            //session
+            CreateMap<Session, SessionViewModel>()
+                .ForMember(dest => dest.id,
+                        opt => opt.MapFrom(source => source.Id))
+                .ForMember(dest => dest.name,
+                        opt => opt.MapFrom(source => source.Name))
+                .ForMember(dest => dest.time_from,
+                        opt => opt.MapFrom(source => source.TimeFrom))
+                .ForMember(dest => dest.time_to,
+                        opt => opt.MapFrom(source => source.TimeTo))
+                ;
+
             //Menu
             CreateMap<Menu, MenuViewModel>()
                 .ForMember(dest => dest.TimeFrom,
                         opt => opt.MapFrom(source => source.Session.TimeFrom))
                 .ForMember(dest => dest.TimeTo,
                         opt => opt.MapFrom(source => source.Session.TimeTo))
-                .ReverseMap();
+               ;
+
+            CreateMap<MenuViewModel, Menu>()
+                .ForMember(dest => dest.SessionId,
+                        opt => opt.MapFrom(source => source.session_id))
+
+                .ForMember(dest => dest.MenuDetails,
+                        opt => opt.MapFrom(source => source.menu_details))
+                ;
 
             //MenuDetail
             CreateMap<MenuDetail, MenuDetailViewModel>()

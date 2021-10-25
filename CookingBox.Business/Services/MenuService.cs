@@ -61,19 +61,23 @@ namespace CookingBox.Business.Services
         }
 
 
-        //user access
 
-
-        public async Task InsertMenu(MenuViewModel menuViewModel)
+        public async Task<int> InsertMenu(MenuViewModel menuViewModel)
         {
             var menu = _mapper.Map<Menu>(menuViewModel);
-            await _menuRepository.InsertMenu(menu);
+            return await _menuRepository.InsertMenu(menu);
+            
         }
 
         public async Task<bool> UpdateMenu(MenuViewModel menuViewModel)
         {
-            var menu = _mapper.Map<Menu>(menuViewModel);
-            return await _menuRepository.UpdateMenu(menu);
+            if(menuViewModel.id > 0)
+            {
+                var menu = _mapper.Map<Menu>(menuViewModel);
+                return await _menuRepository.UpdateMenu(menu);
+            }
+            return false;
+            
         }
     }
 }

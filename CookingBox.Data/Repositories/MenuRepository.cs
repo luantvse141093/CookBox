@@ -46,19 +46,29 @@ namespace CookingBox.Data.Repositories
             return menus;
         }
 
-        public async Task InsertMenu(Menu menu)
+        public async Task<int> InsertMenu(Menu menu)
         {
             await _context.Menus.AddAsync(menu);
+           // _context.Entry(menu.Session).State = EntityState.Unchanged;
             foreach (var item in menu.MenuDetails)
             {
                 _context.Entry(item.Dish).State = EntityState.Unchanged;
             }
             await _context.SaveChangesAsync();
+            return menu.Id;
         }
 
         public async Task<bool> UpdateMenu(Menu menu)
         {
+            //var menuU = await GetMenu(menu.Id);
+            //menu.
             _context.Menus.Update(menu);
+           // _context.Entry(menu.MenuDetails).State = EntityState.Modified;
+            foreach (var item in menu.MenuDetails)
+            {
+                _context.Entry(item.Dish).State = EntityState.Unchanged;
+            }
+     
             int rows = await _context.SaveChangesAsync();
             return rows > 0;
         }

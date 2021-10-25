@@ -14,7 +14,7 @@ namespace CookingBox.Business.IServices
     public interface IMenuService
     {
         Task<MenuViewModel> GetMenu(int id);
-        Task InsertMenu(MenuViewModel menuViewModel);
+        Task<int> InsertMenu(MenuViewModel menuViewModel);
         Task<bool> UpdateMenu(MenuViewModel menuViewModel);
         Task<bool> DeleteMenu(int id);
         Task<PagedList<MenuViewModel>> GetMenus(MenuListSearch menuListSearch);

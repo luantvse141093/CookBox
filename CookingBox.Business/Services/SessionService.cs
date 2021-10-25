@@ -35,22 +35,19 @@ namespace CookingBox.Business.Services
             }
         }
 
-        public async Task<SessionViewModel> GetSession(int id)
+        public async Task<Session> GetSession(int id)
         {
             var session = await _sessionRepository.GetSession(id);
-            var sessionViewModel = _mapper.Map<SessionViewModel>(session);
-            return sessionViewModel;
+           // var sessionViewModel = _mapper.Map<SessionViewModel>(session);
+            return session;
             
         }
 
-        public async Task<PagedList<SessionViewModel>> GetSessions(SessionListSearch sessionListSearch)
+        public async Task<PagedList<Session>> GetSessions(SessionListSearch sessionListSearch)
         {
             var sessions = await _sessionRepository.GetSessions();
 
-            // if (!string.IsNullOrEmpty(categoryListSearch.name))
-            //{
-            //   categories = categories.Where(x => x.Name.ToLower().Contains(categoryListSearch.name.ToLower()));
-            //}
+           
 
             var count = sessions.Count();
 
@@ -58,9 +55,9 @@ namespace CookingBox.Business.Services
                         .Skip((sessionListSearch.page_number - 1) * sessionListSearch.page_size)
               .Take(sessionListSearch.page_size);
 
-            var sessionViewModels = _mapper.Map<IEnumerable<SessionViewModel>>(dataPage);
+            //var sessionViewModels = _mapper.Map<IEnumerable<SessionViewModel>>(dataPage);
 
-            return new PagedList<SessionViewModel>(sessionViewModels.ToList(),
+            return new PagedList<Session>(dataPage.ToList(),
                 count, sessionListSearch.page_number, sessionListSearch.page_size);
         }
 
