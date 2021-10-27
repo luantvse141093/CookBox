@@ -22,9 +22,11 @@ namespace CookingBox.Business.IServices
         Task<bool> DeleteDish(int id);
         Task<PagedList<DishViewModel>> GetDishes(DishListSearch dishListSearch);
 
+
+
         Task<DishUserViewModel> GetDishUser(UserMenuListSearch userMenuListSearch);
         Task<PagedList<MenuDetail>> GetDishesUser(UserMenuListSearch userMenuListSearch);
-
+        Task<PagedList<MenuDetail>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch);
         Task<DishUserViewModel> GetDishByTaste(UserMenuListSearch userMenuListSearch);
 
 

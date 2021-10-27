@@ -193,6 +193,36 @@ namespace CookingBox.Business.Services
 
         }
 
+        public async Task<PagedList<MenuDetail>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch)
+        {
+            var menus = await _menuRepository.GetMenus();
+            menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
+
+            if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
+            {
+                var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
+                var menu = menus
+                .FirstOrDefault(x => x.Session.TimeFrom <= timeNow && x.Session.TimeTo >= timeNow);
+
+                if (menu != null)
+                {
+                    var dishes = menu.MenuDetails
+                  .Where(x => x.Dish.Status == true
+                  && x.Dish.ParentId == userMenuListSearch.dish_id || x.DishId == userMenuListSearch.dish_id);
+
+                    var count = dishes.Count();
+                    var dataPage = dishes
+                                .Skip((userMenuListSearch.page_number - 1) * userMenuListSearch.page_size)
+                      .Take(userMenuListSearch.page_size);
+
+                    return new PagedList<MenuDetail>(dataPage.ToList(),
+                        count, userMenuListSearch.page_number, userMenuListSearch.page_size);
+                }
+            }
+
+            return null;
+
+        }
         //test1 taste
 
         public async Task<DishUserViewModel> GetDishByTaste(UserMenuListSearch userMenuListSearch)
@@ -238,7 +268,8 @@ namespace CookingBox.Business.Services
                         }
 
 
-                        if (checkTasteCount == userMenuListSearch.list_taste.Count())
+                        //if (checkTasteCount == userMenuListSearch.list_taste.Count())
+                        if (checkTasteCount == listDish[i].Dish.TasteDetails.Count())
                         {
                             var menudetail = menu.MenuDetails.FirstOrDefault(x => x.DishId == dish_idCheck);
                             if (menudetail != null)
@@ -265,7 +296,6 @@ namespace CookingBox.Business.Services
                 }
 
             }
-
 
             return null;
         }

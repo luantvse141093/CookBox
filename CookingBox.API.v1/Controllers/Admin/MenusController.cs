@@ -66,11 +66,11 @@ namespace CookingBox.API.v1.Controllers.Admin
             try
             {
                 return Ok(await _menuService.InsertMenu(menuViewModel));
-                
+
             }
             catch (Exception e)
             {
-                var a =e.ToString();
+                var a = e.ToString();
                 return BadRequest();
             }
         }

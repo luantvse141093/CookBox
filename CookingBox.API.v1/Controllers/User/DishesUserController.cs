@@ -50,7 +50,7 @@ namespace CookingBox.API.v1.Controllers.User
             return NotFound();
         }
 
-        [HttpGet("dish")]
+        [HttpGet("dishparent")]
         public async Task<IActionResult> GetDishUser([FromQuery] UserMenuListSearch userMenuListSearch)
         {
             var dish = await _DishsService.GetDishUser(userMenuListSearch);
@@ -61,16 +61,27 @@ namespace CookingBox.API.v1.Controllers.User
             return Ok(dish);
         }
 
-        [HttpGet("dishtaste")]
-        public async Task<IActionResult> GetDishUserByTaste([FromBody] UserMenuListSearch userMenuListSearch)
+        [HttpGet("dishparentchild")]
+        public async Task<IActionResult> GetDishUserByTaste([FromQuery] UserMenuListSearch userMenuListSearch)
         {
-            var dish = await _DishsService.GetDishByTaste(userMenuListSearch);
+            var dish = await _DishsService.GetDishUserParentAndChild(userMenuListSearch);
             if (dish == null)
             {
                 return NotFound();
             }
             return Ok(dish);
         }
+
+        //[HttpGet("dishtaste")]
+        //public async Task<IActionResult> GetDishUserByTaste([FromBody] UserMenuListSearch userMenuListSearch)
+        //{
+        //    var dish = await _DishsService.GetDishByTaste(userMenuListSearch);
+        //    if (dish == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(dish);
+        //}
 
 
     }
