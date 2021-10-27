@@ -111,9 +111,16 @@ namespace CookingBox.Business.Services
 
         public async Task<UserViewModel> Login(string email, string password)
         {
+            if (email == null || password == null)
+            {
+                return null;
+            }
             var user = await _usersRepository.GetUsers();
-           
-            user = user.Where(x => x.Email.ToLower().Equals(email.ToLower()) && BCrypt.Net.BCrypt.Verify(password, x.Password));
+
+            user = user.Where(x => x.Password != null && !"".Equals(x.Password.Trim()));
+
+            user = user.Where(x => x.Email.ToLower().Equals(email.ToLower())
+            && BCrypt.Net.BCrypt.Verify(password, x.Password));
             if (user.Count() > 0)
             {
                 var userViewModel = _mapper.Map<UserViewModel>(user.FirstOrDefault());

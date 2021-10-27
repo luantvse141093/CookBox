@@ -72,7 +72,7 @@ namespace CookingBox.API.v1.Controllers
             }
             else if (login.email != null && login.pass != null && login.token == null)
             {
-                var loginCheck = _usersService.Login(login.email, login.pass).Result;
+                var loginCheck = _usersService.Login(login.email.ToString(), login.pass.ToString()).Result;
                 if (loginCheck != null)
                 {
                     myList.Add(new KeyValuePair<string, string>("name", loginCheck.name));
