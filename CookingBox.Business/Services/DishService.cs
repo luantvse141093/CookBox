@@ -129,11 +129,13 @@ namespace CookingBox.Business.Services
             menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
             if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0
-               && userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
+               && userMenuListSearch.dish_id != null && userMenuListSearch.dish_id > 0)
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
-                .FirstOrDefault(x => x.Session.TimeFrom <= timeNow && x.Session.TimeTo >= timeNow);
+                .FirstOrDefault(x => x.MenuStores
+                  .Any(y => y.Session.TimeFrom <= timeNow && y.Session.TimeTo >= timeNow
+                       && y.Status == true));
                 if (menu != null)
                 {
                     var menudetail = menu.MenuDetails.FirstOrDefault(x => x.DishId == userMenuListSearch.dish_id);
@@ -170,7 +172,9 @@ namespace CookingBox.Business.Services
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
-                .FirstOrDefault(x => x.Session.TimeFrom <= timeNow && x.Session.TimeTo >= timeNow);
+               .FirstOrDefault(x => x.MenuStores
+                  .Any(y => y.Session.TimeFrom <= timeNow && y.Session.TimeTo >= timeNow
+                       && y.Status == true));
 
                 if (menu != null)
                 {
@@ -206,7 +210,9 @@ namespace CookingBox.Business.Services
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
-                .FirstOrDefault(x => x.Session.TimeFrom <= timeNow && x.Session.TimeTo >= timeNow);
+                 .FirstOrDefault(x => x.MenuStores
+                  .Any(y => y.Session.TimeFrom <= timeNow && y.Session.TimeTo >= timeNow
+                       && y.Status == true));
 
                 if (menu != null)
                 {
@@ -247,7 +253,9 @@ namespace CookingBox.Business.Services
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
-                .FirstOrDefault(x => x.Session.TimeFrom <= timeNow && x.Session.TimeTo >= timeNow);
+                 .FirstOrDefault(x => x.MenuStores
+                  .Any(y => y.Session.TimeFrom <= timeNow && y.Session.TimeTo >= timeNow
+                       && y.Status == true));
 
                 if (menu != null)
                 {

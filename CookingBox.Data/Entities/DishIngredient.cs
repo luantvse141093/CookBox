@@ -12,7 +12,6 @@ namespace CookingBox.Data.Entities
         public double? Quantity { get; set; }
         public int? DishId { get; set; }
 
-
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Dish Dish { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]

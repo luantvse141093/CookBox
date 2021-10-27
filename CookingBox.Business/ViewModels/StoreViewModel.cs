@@ -14,7 +14,9 @@ namespace CookingBox.Business.ViewModels
         public string address { get; set; }
         public bool? status { get; set; }
 
+        public virtual ICollection<MenuStoreViewModel> menu_stores { get; set; }
 
-        
+
+
     }
 }

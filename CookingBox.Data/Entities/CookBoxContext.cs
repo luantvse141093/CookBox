@@ -104,14 +104,9 @@ namespace CookingBox.Data.Entities
             {
                 entity.ToTable("Menu");
 
-                entity.Property(e => e.SessionId).HasColumnName("SessionID");
+                entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.Property(e => e.Status).HasDefaultValueSql("('True')");
-
-                entity.HasOne(d => d.Session)
-                    .WithMany(p => p.Menus)
-                    .HasForeignKey(d => d.SessionId)
-                    .HasConstraintName("FK_MSR");
             });
 
             modelBuilder.Entity<MenuDetail>(entity =>
@@ -141,6 +136,8 @@ namespace CookingBox.Data.Entities
 
                 entity.Property(e => e.MenuId).HasColumnName("MenuID");
 
+                entity.Property(e => e.SessionId).HasColumnName("SessionID");
+
                 entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
@@ -149,6 +146,11 @@ namespace CookingBox.Data.Entities
                     .WithMany(p => p.MenuStores)
                     .HasForeignKey(d => d.MenuId)
                     .HasConstraintName("FK_MenuStore_Menu");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.MenuStores)
+                    .HasForeignKey(d => d.SessionId)
+                    .HasConstraintName("FK_MenuStore_Session");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.MenuStores)

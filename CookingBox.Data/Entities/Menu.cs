@@ -14,11 +14,9 @@ namespace CookingBox.Data.Entities
         }
 
         public int Id { get; set; }
-        public int? SessionId { get; set; }
+        public string Name { get; set; }
         public bool? Status { get; set; }
 
-        [System.Text.Json.Serialization.JsonIgnore]
-        public virtual Session Session { get; set; }
         public virtual ICollection<MenuDetail> MenuDetails { get; set; }
         public virtual ICollection<MenuStore> MenuStores { get; set; }
     }

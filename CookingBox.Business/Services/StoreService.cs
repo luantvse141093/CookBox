@@ -39,6 +39,7 @@ namespace CookingBox.Business.Services
         {
             var store = await _storeRepository.GetStore(id);
             var storeViewModel = _mapper.Map<StoreViewModel>(store);
+            storeViewModel.menu_stores = _mapper.Map<ICollection<MenuStoreViewModel>>(store.MenuStores);
             return storeViewModel;
         }
 

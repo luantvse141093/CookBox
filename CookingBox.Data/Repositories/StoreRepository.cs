@@ -29,6 +29,7 @@ namespace CookingBox.Data.Repositories
         public async Task<Store> GetStore(int id)
         {
             var post = await _context.Stores
+                .Include(x => x.MenuStores).ThenInclude(y => y.Session)
               .FirstOrDefaultAsync(x => x.Id == id);
             return post;
         }

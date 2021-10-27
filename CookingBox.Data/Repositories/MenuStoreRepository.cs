@@ -47,6 +47,7 @@ namespace CookingBox.Data.Repositories
             await _context.MenuStores.AddAsync(menuStore);
             _context.Entry(menuStore.Menu).State = EntityState.Unchanged;
             _context.Entry(menuStore.Store).State = EntityState.Unchanged;
+            _context.Entry(menuStore.Session).State = EntityState.Unchanged;
 
             await _context.SaveChangesAsync();
             return menuStore.Id;
@@ -56,6 +57,9 @@ namespace CookingBox.Data.Repositories
         public async Task<bool> UpdateMenuStore(MenuStore menuStore)
         {
             _context.MenuStores.Update(menuStore);
+            _context.Entry(menuStore.Menu).State = EntityState.Unchanged;
+            _context.Entry(menuStore.Store).State = EntityState.Unchanged;
+            _context.Entry(menuStore.Session).State = EntityState.Unchanged;
             int rows = await _context.SaveChangesAsync();
             return rows > 0;
         }

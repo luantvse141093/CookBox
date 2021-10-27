@@ -5,7 +5,7 @@ namespace CookingBox.Business.ViewModels
     {
         public int id { get; set; }
         public string name { get; set; }
-        public DateTime? time_from { get; set; }
-        public DateTime? time_to { get; set; }
+        public double? time_from { get; set; }
+        public double? time_to { get; set; }
     }
 }

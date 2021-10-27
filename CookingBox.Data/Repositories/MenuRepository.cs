@@ -29,8 +29,8 @@ namespace CookingBox.Data.Repositories
         public async Task<Menu> GetMenu(int id)
         {
             var menu = await _context.Menus
-                  .Include(x => x.Session)
-                  .Include(x => x.MenuStores).ThenInclude(y=>y.Store)
+                  .Include(x => x.MenuStores).ThenInclude(y => y.Store)
+                  .Include(x => x.MenuStores).ThenInclude(y => y.Session)
                   .Include(x => x.MenuDetails).ThenInclude(y => y.Dish)
                   .FirstOrDefaultAsync(x => x.Id == id);
             return menu;
@@ -39,8 +39,8 @@ namespace CookingBox.Data.Repositories
         public async Task<IEnumerable<Menu>> GetMenus()
         {
             var menus = await _context.Menus
-                  .Include(x => x.Session)
                   .Include(x => x.MenuStores).ThenInclude(y => y.Store)
+                  .Include(x => x.MenuStores).ThenInclude(y => y.Session)
                  .Include(x => x.MenuDetails).ThenInclude(y => y.Dish)
                   .ToListAsync();
             return menus;
@@ -49,7 +49,7 @@ namespace CookingBox.Data.Repositories
         public async Task<int> InsertMenu(Menu menu)
         {
             await _context.Menus.AddAsync(menu);
-           // _context.Entry(menu.Session).State = EntityState.Unchanged;
+
             foreach (var item in menu.MenuDetails)
             {
                 _context.Entry(item.Dish).State = EntityState.Unchanged;
@@ -63,12 +63,12 @@ namespace CookingBox.Data.Repositories
             //var menuU = await GetMenu(menu.Id);
             //menu.
             _context.Menus.Update(menu);
-           // _context.Entry(menu.MenuDetails).State = EntityState.Modified;
+            // _context.Entry(menu.MenuDetails).State = EntityState.Modified;
             foreach (var item in menu.MenuDetails)
             {
                 _context.Entry(item.Dish).State = EntityState.Unchanged;
             }
-     
+
             int rows = await _context.SaveChangesAsync();
             return rows > 0;
         }

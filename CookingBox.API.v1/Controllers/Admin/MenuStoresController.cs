@@ -56,5 +56,18 @@ namespace CookingBox.API.v1.Controllers.Admin
             }
             return BadRequest();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateMenuStore(MenuStoreViewModel menuStoreViewModel)
+        {
+
+            var result = await _menuStoreService.UpdateMenuStore(menuStoreViewModel);
+            if (result)
+            {
+                var response = new ApiResponse<bool>(result);
+                return Ok(response);
+            }
+            return BadRequest();
+        }
     }
 }
