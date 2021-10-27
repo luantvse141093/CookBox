@@ -128,7 +128,8 @@ namespace CookingBox.Business.Services
             var menus = await _menuRepository.GetMenus();
             menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
-            if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
+            if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0
+               && userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
@@ -193,12 +194,15 @@ namespace CookingBox.Business.Services
 
         }
 
-        public async Task<PagedList<MenuDetail>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch)
+        public async Task<List<DishUserViewModel>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch)
         {
+            List<DishUserViewModel> listDishUser = new List<DishUserViewModel>();
+
             var menus = await _menuRepository.GetMenus();
             menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
 
-            if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0)
+            if (userMenuListSearch.store_id != null && userMenuListSearch.store_id > 0
+                && userMenuListSearch.dish_id != null && userMenuListSearch.dish_id > 0)
             {
                 var timeNow = DateTime.Now.Hour + DateTime.Now.Minute * 1.0 / 60;
                 var menu = menus
@@ -210,13 +214,22 @@ namespace CookingBox.Business.Services
                   .Where(x => x.Dish.Status == true
                   && x.Dish.ParentId == userMenuListSearch.dish_id || x.DishId == userMenuListSearch.dish_id);
 
-                    var count = dishes.Count();
-                    var dataPage = dishes
-                                .Skip((userMenuListSearch.page_number - 1) * userMenuListSearch.page_size)
-                      .Take(userMenuListSearch.page_size);
 
-                    return new PagedList<MenuDetail>(dataPage.ToList(),
-                        count, userMenuListSearch.page_number, userMenuListSearch.page_size);
+                    foreach (var item in dishes)
+                    {
+                        var price = item.Price;
+                        var dish = await _dishRepository.GetDish(item.DishId.Value);
+
+                        var dishViewModel = _mapper.Map<DishUserViewModel>(dish);
+                        dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
+                        dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
+                        dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
+                        dishViewModel.price = price;
+
+                        listDishUser.Add(dishViewModel);
+                    }
+
+                    return listDishUser;
                 }
             }
 

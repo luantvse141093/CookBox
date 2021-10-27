@@ -26,7 +26,7 @@ namespace CookingBox.Business.IServices
 
         Task<DishUserViewModel> GetDishUser(UserMenuListSearch userMenuListSearch);
         Task<PagedList<MenuDetail>> GetDishesUser(UserMenuListSearch userMenuListSearch);
-        Task<PagedList<MenuDetail>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch);
+        Task<List<DishUserViewModel>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch);
         Task<DishUserViewModel> GetDishByTaste(UserMenuListSearch userMenuListSearch);
 
 
