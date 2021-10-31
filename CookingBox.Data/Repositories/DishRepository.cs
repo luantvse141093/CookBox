@@ -42,8 +42,8 @@ namespace CookingBox.Data.Repositories
         public async Task<IEnumerable<Dish>> GetDishes()
         {
             var dishes = await _context.Dishes
-                  //.Include(x => x.TasteDetails).ThenInclude(y => y.Taste)
-                  //.Include(x => x.Category)
+                   //.Include(x => x.TasteDetails).ThenInclude(y => y.Taste)
+                   .Include(x => x.Category)
                   //.Include(x => x.Repices).ThenInclude(y => y.Steps)
                   .ToListAsync();
             return dishes;

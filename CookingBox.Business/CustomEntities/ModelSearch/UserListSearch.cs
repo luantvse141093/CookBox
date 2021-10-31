@@ -9,6 +9,7 @@ namespace CookingBox.Business.CustomEntities.ModelSearch
 {
     public class UserListSearch : PagingParameters
     {
+        public string? name { get; set; }
         public string? email { get; set; }
         public string? role_id { get; set; }
 

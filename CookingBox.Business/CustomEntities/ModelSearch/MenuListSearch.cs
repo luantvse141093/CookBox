@@ -13,5 +13,6 @@ namespace CookingBox.Business.CustomEntities.ModelSearch
         public string? name { get; set; }
         public Sort? sort_name { get; set; }
         public int? store_id { get; set; }
+        public bool? status { get; set; }
     }
 }

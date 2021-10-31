@@ -7,6 +7,7 @@ namespace CookingBox.Business.ViewModels
         public int? dish_id { get; set; }
         public string? dish_name { get; set; }
         public double? price { get; set; }
+        public bool status { get; set; }
 
 
     }

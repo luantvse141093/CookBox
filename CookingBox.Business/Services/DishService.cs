@@ -52,10 +52,25 @@ namespace CookingBox.Business.Services
                 return null;
             }
             var dishViewModel = _mapper.Map<DishViewModel>(dish);
-            dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
-            dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
             dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
+            if (dishViewModel.parent_id == 0)
+            {
+                dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
+                dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
+            }
+            else
+            {
+                var dishParent = GetDish(dishViewModel.parent_id);
+                if (dishParent.Result != null)
+                {
+                    dishViewModel.dish_ingredients = dishParent.Result.dish_ingredients;
+                    dishViewModel.nutrient_details = dishParent.Result.nutrient_details;
+                    dishViewModel.repices = dishParent.Result.repices;
+
+                }
+            }
             return dishViewModel;
+
         }
 
 
@@ -149,10 +164,24 @@ namespace CookingBox.Business.Services
                             return null;
                         }
                         var dishViewModel = _mapper.Map<DishUserViewModel>(dish);
-                        dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
-                        dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
                         dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
                         dishViewModel.price = price;
+                        if (dishViewModel.parent_id == 0)
+                        {
+                            dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
+                            dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
+                        }
+                        else
+                        {
+                            var dishParent = GetDish(dishViewModel.parent_id);
+                            if (dishParent.Result != null)
+                            {
+                                dishViewModel.dish_ingredients = dishParent.Result.dish_ingredients;
+                                dishViewModel.nutrient_details = dishParent.Result.nutrient_details;
+                                dishViewModel.repices = dishParent.Result.repices;
+
+                            }
+                        }
                         return dishViewModel;
                     }
 

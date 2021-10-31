@@ -64,6 +64,10 @@ namespace CookingBox.Business.Services
             {
                 users = users.Where(x => x.RoleId.Equals(userListSearch.role_id));
             }
+            if (!string.IsNullOrEmpty(userListSearch.name))
+            {
+                users = users.Where(x => x.Name.ToLower().Contains(userListSearch.name.ToLower()));
+            }
             if (!string.IsNullOrEmpty(userListSearch.email))
             {
                 users = users.Where(x => x.Email.Equals(userListSearch.email));
