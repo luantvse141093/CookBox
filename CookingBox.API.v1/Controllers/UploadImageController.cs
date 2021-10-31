@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Storage;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Caching.Distributed;
 namespace CookingBox.API.v1.Controllers
 {
     [Route("api/v1/image")]
+    [EnableCors("CBPolicy")]
     [ApiController]
     public class UploadImageController : ControllerBase
     {
