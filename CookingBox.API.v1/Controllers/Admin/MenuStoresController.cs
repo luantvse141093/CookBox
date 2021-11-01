@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CookingBox.API.v1.ResponseModels;
+using CookingBox.Business.CustomEntities.ModelSearch;
+using CookingBox.Business.Helppers;
 using CookingBox.Business.IServices;
 using CookingBox.Business.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +30,24 @@ namespace CookingBox.API.v1.Controllers.Admin
             _uriService = uriService;
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetMenuStores([FromQuery] MenuStoreListSearch menuStoreListSearch)
+        {
+            var menuStores = await _menuStoreService.GetMenuStores(menuStoreListSearch);
+            var pageResponse = PaginationHelper<MenuStoreViewModel>.CreatePagedReponse(menuStores, _uriService,
+             string.Concat(Request.Path.Value, Request.QueryString.Value)
+             );
+            //var response = new ApiResponse<IEnumerable<PaymentDto>>(PaymentsDTO);
+            return Ok(pageResponse);
+        }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMenuStore(int id)
+        {
+            var payment = await _menuStoreService.GetMenuStore(id);
+            //var response = new ApiResponse<PaymentDto>(PaymentDTO);
+            return Ok(payment);
+        }
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> InsertMenuStore([FromBody] MenuStoreViewModel menuStoreViewModel)

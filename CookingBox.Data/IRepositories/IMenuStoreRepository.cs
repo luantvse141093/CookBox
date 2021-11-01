@@ -8,7 +8,7 @@ namespace CookingBox.Data.IRepositories
     public interface IMenuStoreRepository
     {
         Task<IEnumerable<MenuStore>> GetMenuStores();
-        Task<MenuStore> GetMenusStore(int id);
+        Task<MenuStore> GetMenuStore(int id);
         Task<int> InsertMenuStore(MenuStore menuStore);
         Task<bool> UpdateMenuStore(MenuStore menuStore);
         Task<bool> DeleteMenuStore(int id);

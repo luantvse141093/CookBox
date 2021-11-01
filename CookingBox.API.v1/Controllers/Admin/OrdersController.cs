@@ -21,12 +21,12 @@ namespace CookingBox.Api.Controllers.Admin
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService _OrdersService;
+        private readonly IOrderService _ordersService;
         private readonly IUriService _uriService;
 
         public OrdersController(IOrderService ordersService, IUriService uriService)
         {
-            _OrdersService = ordersService;
+            _ordersService = ordersService;
             _uriService = uriService;
 
         }
@@ -34,7 +34,7 @@ namespace CookingBox.Api.Controllers.Admin
         [HttpGet]
         public async Task<IActionResult> GetOrders([FromQuery] OrderListSearch orderListSearch)
         {
-            var Orders = await _OrdersService.GetOrders(orderListSearch);
+            var Orders = await _ordersService.GetOrders(orderListSearch);
             var pageResponse = PaginationHelper<OrderViewModel>.CreatePagedReponse(Orders, _uriService,
              string.Concat(Request.Path.Value, Request.QueryString.Value)
              );
@@ -45,7 +45,7 @@ namespace CookingBox.Api.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(int id)
         {
-            var Order = await _OrdersService.GetOrder(id);
+            var Order = await _ordersService.GetOrder(id);
             //var response = new ApiResponse<OrderDto>(OrderDTO);
             return Ok(Order);
         }
@@ -54,7 +54,7 @@ namespace CookingBox.Api.Controllers.Admin
         public async Task<IActionResult> InsertOrder([FromBody] OrderViewModel orderViewModel)
         {
 
-            await _OrdersService.InsertOrder(orderViewModel);
+            await _ordersService.InsertOrder(orderViewModel);
             return Ok();
         }
 
@@ -63,7 +63,7 @@ namespace CookingBox.Api.Controllers.Admin
         {
             String mode = "processing";
 
-            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note, mode);
+            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note, mode);
 
             if (result)
             {
@@ -77,7 +77,7 @@ namespace CookingBox.Api.Controllers.Admin
         public async Task<IActionResult> AcceptOrder(int id)
         {
             String mode = "processing";
-            var result = await _OrdersService.UpdateOrder(id, Business.Enums.OrderStatus.Processing.ToString(), "", mode);
+            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Processing.ToString(), "", mode);
 
             if (result)
             {

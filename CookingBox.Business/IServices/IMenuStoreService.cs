@@ -12,6 +12,6 @@ namespace CookingBox.Business.IServices
         Task<int> InsertMenuStore(MenuStoreViewModel menuStoreViewModel);
         Task<bool> UpdateMenuStore(MenuStoreViewModel menuStoreViewModel);
         Task<bool> DeleteMenuStore(int id);
-        Task<PagedList<MenuStoreViewModel>> GetMenus(MenuStoreListSearch menuStoreListSearch);
+        Task<PagedList<MenuStoreViewModel>> GetMenuStores(MenuStoreListSearch menuStoreListSearch);
     }
 }

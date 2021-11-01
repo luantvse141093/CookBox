@@ -35,10 +35,10 @@ namespace CookingBox.API.v1.Controllers
         public async Task<IActionResult> Index(IFormFile file)
         {
 
-            //string cachedImageUrlString = string.Empty;
-            //cachedImageUrlString = await _distributedCache.GetStringAsync("_imageUrl");
+            string cachedImageUrlString = string.Empty;
+            cachedImageUrlString = await _distributedCache.GetStringAsync("_imageUrl");
 
-            if (file.Length > 0)
+            if (file.Length > 0 && file.ContentType.Contains("image"))
             {
                 var ms = file.OpenReadStream();
 
@@ -63,12 +63,12 @@ namespace CookingBox.API.v1.Controllers
 
                 task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
 
-                //var expiryOptions = new DistributedCacheEntryOptions()
-                //{
-                //    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5),
-                //    SlidingExpiration = TimeSpan.FromMinutes(5)
-                //};
-                //await _distributedCache.SetStringAsync("_imageUrl", (await task).ToString(), expiryOptions);
+                var expiryOptions = new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5),
+                    SlidingExpiration = TimeSpan.FromMinutes(5)
+                };
+                await _distributedCache.SetStringAsync("_imageUrl", (await task).ToString(), expiryOptions);
 
                 return Ok((await task).ToString());
 

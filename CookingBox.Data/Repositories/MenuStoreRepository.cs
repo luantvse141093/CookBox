@@ -27,9 +27,12 @@ namespace CookingBox.Data.Repositories
             return rows > 0;
         }
 
-        public async Task<MenuStore> GetMenusStore(int id)
+        public async Task<MenuStore> GetMenuStore(int id)
         {
             var menuStore = await _context.MenuStores
+                  .Include(x => x.Store)
+                  .Include(x => x.Menu)
+                  .Include(x => x.Session)
                   .FirstOrDefaultAsync(x => x.Id == id);
             return menuStore;
         }
@@ -37,7 +40,10 @@ namespace CookingBox.Data.Repositories
         public async Task<IEnumerable<MenuStore>> GetMenuStores()
         {
             var menuStores = await _context.MenuStores
-                  .ToListAsync();
+                .Include(x => x.Store)
+                .Include(x => x.Menu)
+                .Include(x => x.Session)
+                .ToListAsync();
             return menuStores;
         }
 
