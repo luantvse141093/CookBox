@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace CookingBox.Api.Controllers.Admin
 {
     [Route("api/v1/admin/dishes")]
-    [Authorize(Policy = "AD")]
+    //[Authorize(Policy = "AD")]
     [EnableCors("CBPolicy")]
     [ApiController]
     public class DishesController : ControllerBase

@@ -18,6 +18,7 @@ namespace CookingBox.Business.ViewModels
         public string category_name { get; set; }
         public bool status { get; set; }
         public int parent_id { get; set; } = 0;
+        public List<Dish> list_child { get; set; }
 
         public virtual ICollection<DishIngredientViewModel> dish_ingredients { get; set; }
         public virtual ICollection<NutrientDetailViewModel> nutrient_details { get; set; }

@@ -47,14 +47,20 @@ namespace CookingBox.Business.Services
         public async Task<DishViewModel> GetDish(int id)
         {
             var dish = await _dishRepository.GetDish(id);
+            
             if (dish == null)
             {
                 return null;
             }
             var dishViewModel = _mapper.Map<DishViewModel>(dish);
+            
+
             dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
             if (dishViewModel.parent_id == 0)
             {
+                var listChild = await _dishRepository.GetDishes();
+                listChild = listChild.Where(x => x.ParentId == id);
+                dishViewModel.list_child = listChild.ToList();
                 dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
                 dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
             }
@@ -93,7 +99,7 @@ namespace CookingBox.Business.Services
         {
             var dishes = await _dishRepository.GetDishes();
 
-            dishes = dishes.Where(x => x.Id == 0);
+            dishes = dishes.Where(x => x.ParentId == 0);
 
             if (!string.IsNullOrEmpty(dishListSearch.name))
             {
