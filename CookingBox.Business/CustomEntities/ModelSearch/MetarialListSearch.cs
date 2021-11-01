@@ -5,6 +5,7 @@ namespace CookingBox.Business.CustomEntities.ModelSearch
 {
     public class MetarialListSearch : PagingParameters
     {
-        
+        public string? name { get; set; }
+
     }
 }

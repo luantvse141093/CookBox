@@ -66,6 +66,29 @@ namespace CookingBox.Business.Services
             return new PagedList<StoreViewModel>(storeViewModels.ToList(),
                 count, storeListSearch.page_number, storeListSearch.page_size);
         }
+        public async Task<PagedList<StoreViewModel>> GetStoresUser(StoreListSearch storeListSearch)
+        {
+            var stores = await _storeRepository.GetStores();
+
+
+            stores = stores.Where(x => x.Status == true);
+
+            if (!string.IsNullOrEmpty(storeListSearch.name))
+            {
+                stores = stores.Where(x => x.Name.ToLower().Contains(storeListSearch.name.ToLower()));
+            }
+
+            var count = stores.Count();
+
+            var dataPage = stores
+                        .Skip((storeListSearch.page_number - 1) * storeListSearch.page_size)
+              .Take(storeListSearch.page_size);
+
+            var storeViewModels = _mapper.Map<IEnumerable<StoreViewModel>>(dataPage);
+
+            return new PagedList<StoreViewModel>(storeViewModels.ToList(),
+                count, storeListSearch.page_number, storeListSearch.page_size);
+        }
 
         public async Task<int> InsertStore(StoreViewModel storeViewModel)
         {

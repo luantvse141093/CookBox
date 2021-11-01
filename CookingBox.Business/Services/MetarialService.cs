@@ -47,10 +47,10 @@ namespace CookingBox.Business.Services
         {
             var metarials = await _metarialRepository.GetMetarials();
 
-            // if (!string.IsNullOrEmpty(categoryListSearch.name))
-            //{
-            //   categories = categories.Where(x => x.Name.ToLower().Contains(categoryListSearch.name.ToLower()));
-            //}
+            if (!string.IsNullOrEmpty(metarialListSearch.name))
+            {
+                metarials = metarials.Where(x => x.Name.ToLower().Contains(metarialListSearch.name.ToLower()));
+            }
 
             var count = metarials.Count();
 

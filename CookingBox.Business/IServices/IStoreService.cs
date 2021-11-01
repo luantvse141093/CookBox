@@ -16,5 +16,6 @@ namespace CookingBox.Business.IServices
         Task<bool> UpdateStore(StoreViewModel storeViewModel);
         Task<bool> DeleteStore(int id);
         Task<PagedList<StoreViewModel>> GetStores(StoreListSearch storeListSearch);
+        Task<PagedList<StoreViewModel>> GetStoresUser(StoreListSearch storeListSearch);
     }
 }

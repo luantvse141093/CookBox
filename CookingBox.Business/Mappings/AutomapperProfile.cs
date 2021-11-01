@@ -28,7 +28,15 @@ namespace CookingBox.Business.Mappings
                 .ForMember(dest => dest.CategoryId,
                         opt => opt.MapFrom(source => source.category_id))
                 .ForMember(dest => dest.ParentId,
-                        opt => opt.MapFrom(source => source.parent_id));
+                        opt => opt.MapFrom(source => source.parent_id))
+                .ForMember(dest => dest.TasteDetails,
+                        opt => opt.MapFrom(source => source.taste_details))
+                .ForMember(dest => dest.NutrientDetails,
+                        opt => opt.MapFrom(source => source.nutrient_details))
+                .ForMember(dest => dest.DishIngredients,
+                        opt => opt.MapFrom(source => source.dish_ingredients))
+                .ForMember(dest => dest.Repices,
+                        opt => opt.MapFrom(source => source.repices));
 
             //dish user
             CreateMap<Dish, DishUserViewModel>()
@@ -38,8 +46,6 @@ namespace CookingBox.Business.Mappings
             CreateMap<Category, CategoryViewModel>()
                 .ReverseMap();
 
-            //DishIngredientViewModel
-            CreateMap<DishIngredient, DishIngredientViewModel>().ReverseMap();
 
             //role
             CreateMap<Role, RoleViewModel>();
@@ -102,12 +108,35 @@ namespace CookingBox.Business.Mappings
                         opt => opt.MapFrom(source => source.OrderStatus)).ReverseMap();
             //CreateMap<OrderViewModel, Order>();
 
+            //DishIngredient
+            CreateMap<DishIngredient, DishIngredientViewModel>();
+
+            CreateMap<DishIngredientViewModel, DishIngredient>()
+               .ForMember(dest => dest.MetarialId,
+                        opt => opt.MapFrom(source => source.metarial_id))
+               .ForMember(dest => dest.DishId,
+                        opt => opt.MapFrom(source => source.dish_id));
+
+
             //NutrientDetail
-            CreateMap<NutrientDetail, NutrientDetailViewModel>()
-                .ReverseMap();
+            CreateMap<NutrientDetail, NutrientDetailViewModel>();
+
+            CreateMap<NutrientDetailViewModel, NutrientDetail>()
+                 .ForMember(dest => dest.NutrientId,
+                        opt => opt.MapFrom(source => source.nutrient_id))
+               .ForMember(dest => dest.DishId,
+                        opt => opt.MapFrom(source => source.dish_id));
 
             //TasteDetail
-            CreateMap<TasteDetail, TasteDetailViewModel>()
+            CreateMap<TasteDetail, TasteDetailViewModel>();
+            CreateMap<TasteDetailViewModel, TasteDetail>()
+                 .ForMember(dest => dest.TasteId,
+                        opt => opt.MapFrom(source => source.taste_id))
+                 .ForMember(dest => dest.TasteLevel,
+                        opt => opt.MapFrom(source => source.taste_level));
+
+            //Metarial
+            CreateMap<Metarial, MetarialViewModel>()
                 .ReverseMap();
 
         }
