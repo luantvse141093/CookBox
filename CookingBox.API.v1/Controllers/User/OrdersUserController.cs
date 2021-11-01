@@ -84,8 +84,8 @@ namespace CookingBox.API.v1.Controllers.User
         [HttpPut("cancel")]
         public async Task<IActionResult> CancelOrder(int id, string note)
         {
-
-            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note);
+            String mode = "processing";
+            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Cancelled.ToString(), note, mode);
 
             if (result)
             {
@@ -93,7 +93,19 @@ namespace CookingBox.API.v1.Controllers.User
                 return Ok(response);
             }
             return BadRequest();
+        }
 
+        [HttpPut("completed")]
+        public async Task<IActionResult> CompleteOrder(int id, string note)
+        {
+            String mode = "completed";
+            var result = await _ordersService.UpdateOrder(id, Business.Enums.OrderStatus.Completed.ToString(), note, mode);
+            if (result)
+            {
+                var response = new ApiResponse<bool>(result);
+                return Ok(response);
+            }
+            return BadRequest();
         }
 
 

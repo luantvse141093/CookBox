@@ -93,6 +93,8 @@ namespace CookingBox.Business.Services
         {
             var dishes = await _dishRepository.GetDishes();
 
+            dishes = dishes.Where(x => x.Id == 0);
+
             if (!string.IsNullOrEmpty(dishListSearch.name))
             {
                 dishes = dishes.Where(x => x.Name.ToLower().Contains(dishListSearch.name.ToLower()));

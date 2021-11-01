@@ -62,15 +62,28 @@ namespace CookingBox.Business.Services
             }
         }
 
-        public async Task<bool> UpdateOrder(int id, string newStatus, string note)
+        public async Task<bool> UpdateOrder(int id, string newStatus, string note, string mode)
         {
             var order = _orderRepository.GetOrder(id);
-            if (order.Result != null && "new".Equals(order.Result.OrderStatus.ToLower().ToString()))
+            if ("completed".Equals(mode))
             {
-                order.Result.OrderStatus = newStatus;
-                order.Result.Note = note;
-                return await _orderRepository.UpdateOrder(order.Result);
+                if (order.Result != null && "processing".Equals(order.Result.OrderStatus.ToLower().ToString()))
+                {
+                    order.Result.OrderStatus = newStatus;
+                    order.Result.Note = note;
+                    return await _orderRepository.UpdateOrder(order.Result);
+                }
             }
+            if ("processing".Equals(mode))
+            {
+                if (order.Result != null && "new".Equals(order.Result.OrderStatus.ToLower().ToString()))
+                {
+                    order.Result.OrderStatus = newStatus;
+                    order.Result.Note = note;
+                    return await _orderRepository.UpdateOrder(order.Result);
+                }
+            }
+
             return false;
 
 

@@ -16,7 +16,7 @@ namespace CookingBox.Business.IServices
     {
         Task<OrderViewModel> GetOrder(int id);
         Task<int> InsertOrder(OrderViewModel OrderViewModel);
-        Task<bool> UpdateOrder(int id, string status, string note);
+        Task<bool> UpdateOrder(int id, string status, string note, string mode);
         Task<PagedList<OrderViewModel>> GetOrders(OrderListSearch OrderListSearch);
 
 
