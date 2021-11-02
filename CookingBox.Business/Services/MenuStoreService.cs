@@ -39,6 +39,11 @@ namespace CookingBox.Business.Services
         public async Task<PagedList<MenuStoreViewModel>> GetMenuStores(MenuStoreListSearch menuStoreListSearch)
         {
             var menuStores = await _menuStoreRepository.GetMenuStores();
+
+            if (menuStoreListSearch.store_id > 0)
+            {
+                menuStores = menuStores.Where(x => x.StoreId == menuStoreListSearch.store_id);
+            }
             var count = menuStores.Count();
 
             var dataPage = menuStores
@@ -61,8 +66,6 @@ namespace CookingBox.Business.Services
                 return null;
             }
             var dishViewModel = _mapper.Map<MenuStoreViewModel>(menuStore);
-
-
 
             return dishViewModel;
         }

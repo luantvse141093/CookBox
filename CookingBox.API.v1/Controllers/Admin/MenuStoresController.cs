@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CookingBox.API.v1.Controllers.Admin
 {
     [Route("api/v1/admin/menustores")]
-    [Authorize(Policy = "AD")]
+    //[Authorize(Policy = "AD")]
     [EnableCors("CBPolicy")]
     [ApiController]
     public class MenuStoresController : ControllerBase
@@ -44,9 +44,13 @@ namespace CookingBox.API.v1.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMenuStore(int id)
         {
-            var payment = await _menuStoreService.GetMenuStore(id);
-            //var response = new ApiResponse<PaymentDto>(PaymentDTO);
-            return Ok(payment);
+            var menuStore = await _menuStoreService.GetMenuStore(id);
+            if (menuStore != null)
+            {
+                return Ok(menuStore);
+            }
+            return NotFound();
+
         }
         // POST api/values
         [HttpPost]
