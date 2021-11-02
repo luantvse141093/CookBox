@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CookingBox.API.v1.Controllers.Admin
 {
     [Route("api/v1/admin/menustores")]
-    //[Authorize(Policy = "AD")]
+    [Authorize(Policy = "AD")]
     [EnableCors("CBPolicy")]
     [ApiController]
     public class MenuStoresController : ControllerBase
