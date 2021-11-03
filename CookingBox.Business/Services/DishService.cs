@@ -47,13 +47,13 @@ namespace CookingBox.Business.Services
         public async Task<DishViewModel> GetDish(int id)
         {
             var dish = await _dishRepository.GetDish(id);
-            
+
             if (dish == null)
             {
                 return null;
             }
             var dishViewModel = _mapper.Map<DishViewModel>(dish);
-            
+
 
             dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
             if (dishViewModel.parent_id == 0)
@@ -216,7 +216,7 @@ namespace CookingBox.Business.Services
                 if (menu != null)
                 {
                     var dishes = menu.MenuDetails
-                  .Where(x => x.Dish.Status == true && x.Dish.ParentId == 0
+                  .Where(x => x.Dish.Status == true && x.Dish.ParentId == 0 && x.Status == true
                   && x.Dish.CategoryId == (userMenuListSearch.category_id > 0 ? userMenuListSearch.category_id : x.Dish.CategoryId)
                   && x.Dish.Name.ToLower()
                   .Contains(!string.IsNullOrEmpty(userMenuListSearch.name) ? userMenuListSearch.name.ToLower() : x.Dish.Name.ToLower()));
@@ -237,7 +237,7 @@ namespace CookingBox.Business.Services
 
         public async Task<List<DishUserViewModel>> GetDishUserParentAndChild(UserMenuListSearch userMenuListSearch)
         {
-            List<DishUserViewModel> listDishUser = new List<DishUserViewModel>();
+            List<DishUserViewModel> listDishUser = null;
 
             var menus = await _menuRepository.GetMenus();
             menus = menus.Where(x => x.MenuStores.Any(y => y.StoreId == userMenuListSearch.store_id) && x.Status == true);
@@ -253,25 +253,29 @@ namespace CookingBox.Business.Services
 
                 if (menu != null)
                 {
-                    var dishes = menu.MenuDetails
-                  .Where(x => x.Dish.Status == true
-                  && x.Dish.ParentId == userMenuListSearch.dish_id || x.DishId == userMenuListSearch.dish_id);
+                    var menudetail = menu.MenuDetails
+                  .FirstOrDefault(x => x.Dish.Status == true
+                  && x.Status == true && x.DishId == userMenuListSearch.dish_id
+                  && x.Dish.ParentId == 0);
 
-
-                    foreach (var item in dishes)
+                    if (menudetail != null)
                     {
-                        var price = item.Price;
-                        var dish = await _dishRepository.GetDish(item.DishId.Value);
+                        listDishUser = new List<DishUserViewModel>();
+                        var priceMenu = menudetail.Price;
 
-                        var dishViewModel = _mapper.Map<DishUserViewModel>(dish);
-                        dishViewModel.dish_ingredients = _mapper.Map<ICollection<DishIngredientViewModel>>(dish.DishIngredients);
-                        dishViewModel.nutrient_details = _mapper.Map<ICollection<NutrientDetailViewModel>>(dish.NutrientDetails);
-                        dishViewModel.taste_details = _mapper.Map<ICollection<TasteDetailViewModel>>(dish.TasteDetails);
-                        dishViewModel.price = price;
+                        var dishViewModel = GetDish(userMenuListSearch.dish_id);
+                        var dishUserViewModel = _mapper.Map<DishUserViewModel>(dishViewModel.Result);
+                        dishUserViewModel.price = priceMenu;
+                        listDishUser.Add(dishUserViewModel);
 
-                        listDishUser.Add(dishViewModel);
+                        foreach (var dish in dishViewModel.Result.list_child)
+                        {
+                            dishViewModel = GetDish(dish.Id);
+                            dishUserViewModel = _mapper.Map<DishUserViewModel>(dishViewModel.Result);
+                            dishUserViewModel.price = priceMenu;
+                            listDishUser.Add(dishUserViewModel);
+                        }
                     }
-
                     return listDishUser;
                 }
             }
@@ -279,8 +283,8 @@ namespace CookingBox.Business.Services
             return null;
 
         }
-        //test1 taste
 
+        //test1 taste k sai nua
         public async Task<DishUserViewModel> GetDishByTaste(UserMenuListSearch userMenuListSearch)
         {
             var menus = await _menuRepository.GetMenus();

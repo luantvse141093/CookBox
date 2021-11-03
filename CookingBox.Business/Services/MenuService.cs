@@ -40,6 +40,10 @@ namespace CookingBox.Business.Services
         public async Task<MenuViewModel> GetMenu(int id)
         {
             var menu = await _menuRepository.GetMenu(id);
+            if (menu == null)
+            {
+                return null;
+            }
             var menuViewModel = _mapper.Map<MenuViewModel>(menu);
             menuViewModel.menu_details = _mapper.Map<ICollection<MenuDetailViewModel>>(menu.MenuDetails);
             menuViewModel.menu_stores = _mapper.Map<ICollection<MenuStoreViewModel>>(menu.MenuStores);

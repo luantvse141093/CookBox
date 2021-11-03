@@ -42,6 +42,11 @@ namespace CookingBox.Business.Mappings
             CreateMap<Dish, DishUserViewModel>()
                .ForMember(dest => dest.category_name,
                        opt => opt.MapFrom(source => source.Category.Name));
+
+            //DishUserViewModel
+            CreateMap<DishViewModel, DishUserViewModel>();
+
+
             //category
             CreateMap<Category, CategoryViewModel>()
                 .ReverseMap();
@@ -57,6 +62,8 @@ namespace CookingBox.Business.Mappings
             //store
             CreateMap<Store, StoreViewModel>()
                 .ReverseMap();
+
+
 
 
 
@@ -89,8 +96,9 @@ namespace CookingBox.Business.Mappings
                         opt => opt.MapFrom(source => source.status));
 
             //MenuDetail
-            CreateMap<MenuDetail, MenuDetailViewModel>()
-                .ReverseMap();
+            CreateMap<MenuDetail, MenuDetailViewModel>().ReverseMap();
+
+
             CreateMap<MenuStore, MenuStoreViewModel>()
                  .ForMember(dest => dest.time_from,
                         opt => opt.MapFrom(source => source.Session.TimeFrom))
