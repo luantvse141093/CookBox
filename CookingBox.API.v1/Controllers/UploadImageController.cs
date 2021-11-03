@@ -47,7 +47,8 @@ namespace CookingBox.API.v1.Controllers
 
 
                 var cancellation = new CancellationTokenSource();
-
+                var time = DateTime.Now.ToString();
+                time = time.Replace('/', '-');
                 var task = new FirebaseStorage(
                     Bucket,
                     new FirebaseStorageOptions
@@ -57,7 +58,7 @@ namespace CookingBox.API.v1.Controllers
                     })
                     .Child("assets")
                     .Child("image")
-                      .Child($"{file.FileName}")
+                      .Child($"{time + "_" + file.FileName}")
 
                       .PutAsync(ms, cancellation.Token);
 
