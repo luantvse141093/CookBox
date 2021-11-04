@@ -12,7 +12,7 @@ namespace CookingBox.Business.CustomEntities.ModelSearch
     {
         public DateTime? date { get; set; }
 
-        public Sort? sort_date { get; set; }
+        public Sort? sort_date { get; set; } = Enums.Sort.desc;
         public int? user_id { get; set; }
         public int? store_id { get; set; }
 

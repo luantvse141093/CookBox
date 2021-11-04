@@ -96,7 +96,7 @@ namespace CookingBox.Business.Services
 
             if (orderListSearch.date.HasValue)
             {
-                orders = orders.Where(x => DateTime.Equals(orderListSearch.date, x.Date));
+                orders = orders.Where(x => DateTime.Equals(orderListSearch.date, x.Date.Value.Date));
 
             }
             else if (!orderListSearch.date.HasValue && orderListSearch.sort_date.HasValue)
