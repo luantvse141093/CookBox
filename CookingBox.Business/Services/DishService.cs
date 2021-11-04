@@ -81,11 +81,11 @@ namespace CookingBox.Business.Services
 
 
 
-        public async Task InsertDish(DishViewModel dishViewModel)
+        public async Task<int> InsertDish(DishViewModel dishViewModel)
         {
 
             var dish = _mapper.Map<Dish>(dishViewModel);
-            await _dishRepository.InsertDish(dish);
+            return await _dishRepository.InsertDish(dish);
 
         }
 

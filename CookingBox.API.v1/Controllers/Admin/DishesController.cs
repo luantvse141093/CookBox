@@ -65,8 +65,8 @@ namespace CookingBox.Api.Controllers.Admin
         {
             try
             {
-                await _DishsService.InsertDish(dishViewModel);
-                return Ok();
+                int id = await _DishsService.InsertDish(dishViewModel);
+                return Ok(id);
             }
             catch (Exception)
             {

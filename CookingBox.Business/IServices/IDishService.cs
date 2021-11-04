@@ -17,7 +17,7 @@ namespace CookingBox.Business.IServices
     public interface IDishService
     {
         Task<DishViewModel> GetDish(int id);
-        Task InsertDish(DishViewModel DishViewModel);
+        Task<int> InsertDish(DishViewModel DishViewModel);
         Task<bool> UpdateDish(DishViewModel dishViewModel);
         Task<bool> DeleteDish(int id);
         Task<PagedList<DishViewModel>> GetDishes(DishListSearch dishListSearch);

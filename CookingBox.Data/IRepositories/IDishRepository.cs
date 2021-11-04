@@ -12,7 +12,7 @@ namespace CookingBox.Data.IRepositories
     {
         Task<IEnumerable<Dish>> GetDishes();
         Task<Dish> GetDish(int id);
-        Task InsertDish(Dish Dish);
+        Task<int> InsertDish(Dish Dish);
         Task<bool> UpdateDish(Dish Dish);
         Task<bool> DeleteDish(int id);
     }

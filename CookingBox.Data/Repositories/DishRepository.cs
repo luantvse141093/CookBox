@@ -49,10 +49,11 @@ namespace CookingBox.Data.Repositories
             return dishes;
         }
 
-        public async Task InsertDish(Dish dish)
+        public async Task<int> InsertDish(Dish dish)
         {
             await _context.Dishes.AddAsync(dish);
             await _context.SaveChangesAsync();
+            return dish.Id;
         }
 
         public async Task<bool> UpdateDish(Dish dish)
