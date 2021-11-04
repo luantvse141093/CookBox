@@ -71,15 +71,15 @@ namespace CookingBox.API.v1.Controllers
                 };
                 await _distributedCache.SetStringAsync("_imageUrl", (await task).ToString(), expiryOptions);
 
-                return Ok((await task).ToString());
+                var imagePath = (await task).ToString();
+
+                return Ok(imagePath);
 
 
             }
             return BadRequest();
 
         }
-
-
-
     }
+
 }
