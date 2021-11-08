@@ -42,6 +42,7 @@ namespace CookingBox.Data.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
+                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Name=CookBoxDB");
             }
         }
@@ -88,6 +89,8 @@ namespace CookingBox.Data.Entities
                 entity.Property(e => e.DishId).HasColumnName("DishID");
 
                 entity.Property(e => e.MetarialId).HasColumnName("MetarialID");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.Dish)
                     .WithMany(p => p.DishIngredients)
@@ -162,9 +165,7 @@ namespace CookingBox.Data.Entities
             {
                 entity.ToTable("Metarial");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Nutrient>(entity =>
@@ -172,6 +173,8 @@ namespace CookingBox.Data.Entities
                 entity.ToTable("Nutrient");
 
                 entity.Property(e => e.Name).HasMaxLength(300);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<NutrientDetail>(entity =>
@@ -181,6 +184,8 @@ namespace CookingBox.Data.Entities
                 entity.Property(e => e.DishId).HasColumnName("DishID");
 
                 entity.Property(e => e.NutrientId).HasColumnName("NutrientID");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.Dish)
                     .WithMany(p => p.NutrientDetails)
@@ -200,7 +205,7 @@ namespace CookingBox.Data.Entities
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Date)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Note).HasMaxLength(150);
@@ -272,6 +277,8 @@ namespace CookingBox.Data.Entities
 
                 entity.Property(e => e.DishId).HasColumnName("DishID");
 
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.Dish)
                     .WithMany(p => p.Repices)
                     .HasForeignKey(d => d.DishId)
@@ -312,6 +319,8 @@ namespace CookingBox.Data.Entities
 
                 entity.Property(e => e.RepiceId).HasColumnName("RepiceID");
 
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
+
                 entity.HasOne(d => d.Repice)
                     .WithMany(p => p.Steps)
                     .HasForeignKey(d => d.RepiceId)
@@ -332,6 +341,8 @@ namespace CookingBox.Data.Entities
                 entity.ToTable("Taste");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<TasteDetail>(entity =>
@@ -339,6 +350,8 @@ namespace CookingBox.Data.Entities
                 entity.ToTable("TasteDetail");
 
                 entity.Property(e => e.DishId).HasColumnName("DishID");
+
+                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.TasteId).HasColumnName("TasteID");
 

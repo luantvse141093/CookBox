@@ -8,5 +8,6 @@ namespace CookingBox.Business.ViewModels
         public string nutrient_name { get; set; }
         public int? dish_id { get; set; }
         public double? amount { get; set; }
+        public bool? status { get; set; }
     }
 }

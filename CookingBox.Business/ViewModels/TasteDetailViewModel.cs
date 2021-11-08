@@ -7,5 +7,6 @@ namespace CookingBox.Business.ViewModels
         public string taste_name { get; set; }
         public int? taste_level { get; set; }
         public int? taste_id { get; set; }
+        public bool? status { get; set; }
     }
 }

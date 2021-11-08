@@ -11,6 +11,7 @@ namespace CookingBox.Data.Entities
         public int? NutrientId { get; set; }
         public int? DishId { get; set; }
         public double? Amount { get; set; }
+        public bool? Status { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual Dish Dish { get; set; }

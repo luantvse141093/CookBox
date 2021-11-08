@@ -14,6 +14,7 @@ namespace CookingBox.Data.Entities
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool? Status { get; set; }
 
         public virtual ICollection<TasteDetail> TasteDetails { get; set; }
     }

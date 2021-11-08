@@ -7,5 +7,6 @@ namespace CookingBox.Business.ViewModels
         public string description { get; set; }
         public int? repiceId { get; set; }
         public string image { get; set; }
+        public bool? status { get; set; }
     }
 }

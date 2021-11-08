@@ -8,5 +8,6 @@ namespace CookingBox.Business.ViewModels
         public string metarial_name { get; set; }
         public double? quantity { get; set; }
         public int dish_id { get; set; }
+        public bool? status { get; set; }
     }
 }
