@@ -202,6 +202,12 @@ namespace CookingBox.API.v1
             services.AddTransient<IMetarialRepository, MetarialRepository>();
             services.AddTransient<IMetarialService, MetarialService>();
 
+            services.AddTransient<ITasteRepository, TasteRepository>();
+            services.AddTransient<ITasteService, TasteService>();
+
+            services.AddTransient<INutrientRepository, NutrientRepository>();
+            services.AddTransient<INutrientService, NutrientService>();
+
             services.AddTransient<INotificationService, NotificationService>();
 
             //get uri page

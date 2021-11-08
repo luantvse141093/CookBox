@@ -147,6 +147,14 @@ namespace CookingBox.Business.Mappings
             CreateMap<Metarial, MetarialViewModel>()
                 .ReverseMap();
 
+            //Taste
+            CreateMap<Taste, TasteViewModel>()
+                .ReverseMap();
+
+            //Nutrient
+            CreateMap<Nutrient, NutrientViewModel>()
+                .ReverseMap();
+
         }
     }
 }
